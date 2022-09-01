@@ -1,0 +1,11 @@
+[package]
+name = "shared_memory"
+version = "0.0.0"
+
+edition = "2021"
+authors = ["unvariant.winter@gmail.com"]
+
+build = "build.rs"
+
+[dependencies]
+libc = "0.2"
