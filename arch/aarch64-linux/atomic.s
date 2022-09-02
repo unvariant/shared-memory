@@ -1,7 +1,6 @@
     .global _atomic_load64
     .global _atomic_store64
 
-    .code 64
     .section .text
 
 
