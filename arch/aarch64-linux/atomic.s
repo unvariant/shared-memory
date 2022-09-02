@@ -5,9 +5,9 @@
     .section .text
 
 
-    .func _atomic_load64
+    .func atomic_load64
 
-_atomic_load64:
+atomic_load64:
     mov     x9,      x0
 1:  ldxr    x0,      [x9]
     stxr    w10,     x0,      [x9]
@@ -17,9 +17,9 @@ _atomic_load64:
     .endfunc
 
 
-    .func _atomic_store64
+    .func atomic_store64
 
-_atomic_store64:
+atomic_store64:
     mov     x9,      x0
 1:  ldxr    x0,      [x9]
     stxr    w10,     x1,      [x9]

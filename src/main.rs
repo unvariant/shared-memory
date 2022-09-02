@@ -32,10 +32,10 @@ fn main () {
     println! ("fd: {fd}");
 
     let rs = unsafe { ftruncate (fd, 2048) };
-    println! ("result: {rs}");
+    println! ("ftruncate: {rs}");
 
     let buf = unsafe { mmap (0 as * mut _, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0) };
-    println! ("buf: {:?}", buf);
+    println! ("buffer address: {:?}", buf);
 
     let mut n = 0;
     unsafe { atomic_store64(buf, n) };
@@ -44,8 +44,8 @@ fn main () {
         n = unsafe { atomic_load64(buf) };
     }
 
-    println! ("n: {n}");
+    println! ("read {n} from the buffer");
 
     let rs = unsafe { shm_unlink ("/test\0".as_ptr() as * const _) };
-    println! ("result: {rs}");
+    println! ("shm_unlink: {rs}");
 }

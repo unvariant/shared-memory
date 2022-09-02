@@ -4,10 +4,9 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <inttypes.h>
-#include "atomic.c"
 
 int main () {
-    int fd = shm_open ("/test", O_RDWR);
+    int fd = shm_open ("/test", O_RDWR, 0);
     printf ("fd: %d\n", fd);
 
     if (fd < 0) {
@@ -16,12 +15,14 @@ int main () {
     }
 
     int rs = ftruncate (fd, 2048);
-    printf ("result: %d\n", rs);
+    printf ("ftruncate: %d\n", rs);
 
     uint64_t * buf = mmap (0, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    printf ("buf: %p\n", buf);
+    printf ("buffer address: %p\n", buf);
 
-    atomic_store64 (buf, 0x100);
+    uint64_t n = 0x100;
+    printf("writing %ld to buffer\n", n);
+    atomic_store64 (buf, n);
 
     close (fd);
 
