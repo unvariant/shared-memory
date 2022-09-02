@@ -7,10 +7,10 @@ Testing shared memory on linux and macos with Rust and C and Assembly.
  - atomics implemented using lock cmpxchg and lock xchg for unaligned accesses
 ### arm32 (arm)
  - ldrexd/strexd faults if the base register is not 8 byte aligned
- - ldrex/strex have no alignment restrictions
+ - ldrex/strex (? alignment restrictions)
  - atomics implemented using load/store exclusives
 ### arm64 (aarch64)
- - ldxr/stxr
+ - ldxr/stxr (? alignment restrictions)
  - atomics implemented using load/store exclusives
 
 ## x86_64-linux
@@ -23,7 +23,8 @@ Testing shared memory on linux and macos with Rust and C and Assembly.
  - compile and run consume.c to write to shared memory
 
 ## aarch64-linux
- - WIP
+ - `cargo run` to setup shared memory
+ - compile and run consume.c to write to shared memory
 
 ## aarch64-macos
  - `cargo run` to setup shared memory
