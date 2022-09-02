@@ -1,0 +1,15 @@
+#!/bin/sh
+
+arch="$1"
+file="$2"
+
+as "arch/$arch/$file.s" -o "$file.o"
+
+out="lib/$arch/lib$file.a"
+
+if test -f "$out"; then
+    rm "$out"
+fi
+
+ar -rcs "$out" "$file.o"
+rm "$file.o"
