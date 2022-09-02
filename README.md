@@ -31,7 +31,7 @@ Testing shared memory on linux and macos with Rust and C and Assembly.
  - compile and run consume.c to write to shared memory
     - strangely running consume.c and attempting to access shared memory fails with Permission Denied, but works fine when run using `sudo`
  - symbols exported from assembly must have `_` prefixed to them, a quirk of macos
- - when building a static library use the `ar` provided by the system
+ - when building a static library use the `ar` provided by the system, otherwise linking will fail with the unhelpful error `building for macOS-arm64 but attempting to link with file built for macOS-arm64`
 
 ## Creating a static library
 1. compile the assembler files using `as`
