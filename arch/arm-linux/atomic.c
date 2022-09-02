@@ -7,7 +7,7 @@ uint64_t atomic_load64 (void * addr) {
     "   strexd  r12,     r0,      r1,      [r3]\n"
     "   teq     r12,     #0\n"
     "   bne     1b\n"
-    )
+    );
 }
 
 uint64_t atomic_store64 (void * addr, uint64_t val) {
@@ -32,7 +32,7 @@ uint32_t atomic_load32 (void * addr) {
     "   strex   r12,     r1,      [r0]\n"
     "   teq     r12,     #0\n"
     "   bne     1b\n"
-    )
+    );
 }
 
 uint32_t atomic_store32 (void * addr, uint32_t val) {

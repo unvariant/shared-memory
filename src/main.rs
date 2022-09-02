@@ -5,6 +5,7 @@ use std::sync::atomic::{
 
 use libc::{
     O_RDONLY, O_RDWR, O_CREAT, O_EXCL, O_TRUNC,
+    S_IRUSR, S_IWUSR, S_IXUSR, S_IRGRP, S_IWGRP, S_IXGRP, S_IROTH, S_IWOTH, S_IXOTH,
     c_void, c_char, c_int,
     PROT_READ, PROT_WRITE, PROT_EXEC, PROT_NONE,
     MAP_SHARED,
@@ -27,7 +28,7 @@ extern "C" {
 }
 
 fn main () {
-    let fd: RawFd = unsafe { shm_open ("/test\0".as_ptr() as * const _, O_CREAT | O_RDWR, 511) };
+    let fd: RawFd = unsafe { shm_open ("/test\0".as_ptr() as * const _, O_CREAT | O_RDWR, (S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH) as c_int) };
     println! ("fd: {fd}");
 
     let rs = unsafe { ftruncate (fd, 2048) };
@@ -36,8 +37,8 @@ fn main () {
     let buf = unsafe { mmap (0 as * mut _, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0) };
     println! ("buf: {:?}", buf);
 
-    let ai = unsafe { &*(buf as * mut AtomicUsize) };
     let mut n = 0;
+    unsafe { atomic_store64(buf, n) };
 
     while n == 0 {
         n = unsafe { atomic_load64(buf) };
