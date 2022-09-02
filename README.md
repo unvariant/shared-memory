@@ -16,7 +16,7 @@ Testing shared memory on linux and macos with Rust and C and Assembly.
 ## x86_64-linux
  - `cargo run` to setup shared memory
  - compile and run consume.c to write to shared memory
- - for some strange reason nasm does not export the global symbols, so the atomics are written for the `as` assembler instead of `nasm`
+ - for some strange reason `nasm` does not export the global symbols, so the atomics are written for the `as` assembler instead of `nasm`
 
 ## arm-linux
  - `cargo run` to setup shared memory
