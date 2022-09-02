@@ -4,6 +4,7 @@
     .section .text
 
 
+    .align 4
     .func atomic_load64
 
 atomic_load64:
@@ -16,6 +17,7 @@ atomic_load64:
     .endfunc
 
 
+    .align 4
     .func atomic_store64
 
 atomic_store64:
