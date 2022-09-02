@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <inttypes.h>
+#include <string.h>
 
 int main () {
     int fd = shm_open ("/test", O_RDWR, 0);
@@ -17,12 +18,15 @@ int main () {
     int rs = ftruncate (fd, 2048);
     printf ("ftruncate: %d\n", rs);
 
-    uint64_t * buf = mmap (0, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    char * buf = mmap (0, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     printf ("buffer address: %p\n", buf);
 
-    uint64_t n = 0x100;
-    printf("writing %ld to buffer\n", n);
-    atomic_store64 (buf, n);
+    char msg[] = "do not share memory by communicating, communicate by sharing memory.";
+    printf("writing data to buffer\n");
+
+    strcpy (buf+1, msg);
+
+    *buf = 1;
 
     close (fd);
 

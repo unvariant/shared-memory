@@ -1,6 +1,13 @@
-use std::sync::atomic::{
-    AtomicUsize,
-    Ordering,
+use std::{
+    io::{
+        stdout,
+        Write,
+    },
+    sync::atomic::{
+        AtomicUsize,
+        Ordering,
+    },
+    ffi::CStr,
 };
 
 use libc::{
@@ -34,17 +41,16 @@ fn main () {
     let rs = unsafe { ftruncate (fd, 2048) };
     println! ("ftruncate: {rs}");
 
-    let buf = unsafe { mmap (0 as * mut _, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0) };
+    let buf: * mut i8 = unsafe { mmap (0 as * mut _, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0) } as * mut _;
     println! ("buffer address: {:?}", buf);
 
     let mut n = 0;
-    unsafe { atomic_store64(buf, n) };
-
     while n == 0 {
-        n = unsafe { atomic_load64(buf) };
+        n = unsafe { *buf };
     }
 
-    println! ("read {n} from the buffer");
+    let msg = unsafe { CStr::from_ptr(buf.add(1)) };
+    println! ("{:?}", msg);
 
     let rs = unsafe { shm_unlink ("/test\0".as_ptr() as * const _) };
     println! ("shm_unlink: {rs}");
