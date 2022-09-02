@@ -4,10 +4,10 @@
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <inttypes.h>
-#include "arch/x86_64-linux/atomic.c"
+#include "atomic.c"
 
 int main () {
-    int fd = shm_open ("/test", O_RDWR, 0);
+    int fd = shm_open ("/test", O_RDWR);
     printf ("fd: %d\n", fd);
 
     if (fd < 0) {
