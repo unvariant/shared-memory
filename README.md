@@ -15,21 +15,21 @@ Testing shared memory on linux and macos with Rust and C and Assembly.
 
 ## x86_64-linux
  - `cargo run` to setup shared memory
- - compile and run consume.c to write to shared memory
+ - compile and run writer.c to write to shared memory
  - for some strange reason `nasm` does not export the global symbols, so the atomics are written for the `as` assembler instead of `nasm`
 
 ## arm-linux
  - `cargo run` to setup shared memory
- - compile and run consume.c to write to shared memory
+ - compile and run writer.c to write to shared memory
 
 ## aarch64-linux
  - `cargo run` to setup shared memory
- - compile and run consume.c to write to shared memory
+ - compile and run writer.c to write to shared memory
 
 ## aarch64-macos
  - `cargo run` to setup shared memory
- - compile and run consume.c to write to shared memory
-    - strangely running consume.c and attempting to access shared memory fails with Permission Denied, but works fine when run using `sudo`
+ - compile and run writer.c to write to shared memory
+    - strangely running writer.c and attempting to access shared memory fails with Permission Denied, but works fine when run using `sudo`
  - symbols exported from assembly must have `_` prefixed to them, a quirk of macos
  - when building a static library use the `ar` provided by the system, otherwise linking will fail with the unhelpful error `building for macOS-arm64 but attempting to link with file built for macOS-arm64`
 
